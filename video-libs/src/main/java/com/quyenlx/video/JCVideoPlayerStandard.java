@@ -822,7 +822,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                             topContainer.setVisibility(INVISIBLE);
                             startButton.setVisibility(INVISIBLE);
                             if (currentScreen != SCREEN_WINDOW_TINY) {
-                                bottomProgressBar.setVisibility(VISIBLE);
+                                bottomProgressBar.setVisibility(INVISIBLE);
                             }
                         }
                     });

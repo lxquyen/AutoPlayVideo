@@ -3,14 +3,16 @@ package com.quyenlx.video;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.SeekBar;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 /**
  * Created by QuyenLx on 7/17/2017.
  */
 
-public class JCVideoPlayerSimple extends JCVideoPlayer {
+public class JCVideoPlayerSimple extends JCVideoPlayerStandard {
+    public ImageView audioButton;
+    private boolean isMute = true;
+
 
     public JCVideoPlayerSimple(Context context) {
         super(context);
@@ -22,72 +24,44 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
 
     @Override
     public int getLayoutId() {
-        return R.layout.jc_layout_base;
+        return R.layout.jc_layout_custom;
     }
 
     @Override
-    public void setUp(String url, int screen, Object... objects) {
-        super.setUp(url, screen, objects);
-        updateFullscreenButton();
-        fullscreenButton.setVisibility(View.GONE);
-    }
-
-//    @Override
-//    public void setUiWitStateAndScreen(int state) {
-//        super.setUiWitStateAndScreen(state);
-//        switch (currentState) {
-//            case CURRENT_STATE_NORMAL:
-//                startButton.setVisibility(View.VISIBLE);
-//                break;
-//            case CURRENT_STATE_PREPARING:
-//                startButton.setVisibility(View.INVISIBLE);
-//                break;
-//            case CURRENT_STATE_PLAYING:
-//                startButton.setVisibility(View.VISIBLE);
-//                break;
-//            case CURRENT_STATE_PAUSE:
-//                break;
-//            case CURRENT_STATE_ERROR:
-//                break;
-//        }
-//        updateStartImage();
-//    }
-
-    private void updateStartImage() {
-        if (currentState == CURRENT_STATE_PLAYING) {
-            startButton.setImageResource(R.drawable.jc_click_pause_selector);
-        } else if (currentState == CURRENT_STATE_ERROR) {
-            startButton.setImageResource(R.drawable.jc_click_error_selector);
-        } else {
-            startButton.setImageResource(R.drawable.jc_click_play_selector);
-        }
-    }
-
-    public void updateFullscreenButton() {
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-            fullscreenButton.setImageResource(R.drawable.jc_shrink);
-        } else {
-            fullscreenButton.setImageResource(R.drawable.jc_enlarge);
-        }
+    public void init(Context context) {
+        super.init(context);
+        audioButton = findViewById(R.id.audio);
+        audioButton.setOnClickListener(this);
+//        JCMediaManager.instance().mediaPlayer.setVolume(0f, 0f);
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fullscreen && currentState == CURRENT_STATE_NORMAL) {
-            Toast.makeText(getContext(), "Play video first", Toast.LENGTH_SHORT).show();
-            return;
-        }
         super.onClick(v);
+
+        int i = v.getId();
+        if (i == R.id.audio) {
+            if (isMute) {
+                JCMediaManager.instance().mediaPlayer.setVolume(1f, 1f);
+            } else {
+                JCMediaManager.instance().mediaPlayer.setVolume(0f, 0f);
+            }
+            isMute = !isMute;
+        }
     }
 
     @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (fromUser) {
-            if (currentState == CURRENT_STATE_NORMAL) {
-                Toast.makeText(getContext(), "Play video first", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-        super.onProgressChanged(seekBar, progress, fromUser);
+    public void setAllControlsVisible(int topCon, int bottomCon, int startBtn, int loadingPro, int thumbImg, int coverImg, int bottomPro) {
+        super.setAllControlsVisible(INVISIBLE, INVISIBLE, startBtn, loadingPro, thumbImg, coverImg, INVISIBLE);
     }
+
+    @Override
+    public void updateStartImage() {
+        super.updateStartImage();
+        if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
+            startButton.setImageResource(R.drawable.jc_click_replay_selector);
+            retryTextView.setVisibility(INVISIBLE);
+        }
+    }
+
 }

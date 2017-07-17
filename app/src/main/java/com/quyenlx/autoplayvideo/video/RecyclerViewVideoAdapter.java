@@ -2,14 +2,13 @@ package com.quyenlx.autoplayvideo.video;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.quyenlx.autoplayvideo.R;
 import com.quyenlx.video.JCVideoPlayer;
-import com.quyenlx.video.JCVideoPlayerStandard;
+import com.quyenlx.video.JCVideoPlayerSimple;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -56,7 +55,7 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<RecyclerViewV
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        JCVideoPlayerStandard jcVideoPlayer;
+        JCVideoPlayerSimple jcVideoPlayer;
 
         public MyViewHolder(View itemView) {
             super(itemView);
