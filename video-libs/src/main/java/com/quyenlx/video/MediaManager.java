@@ -19,11 +19,11 @@ import java.util.Map;
  * Created by QuyenLx on 7/17/2017.
  */
 
-public class JCMediaManager implements TextureView.SurfaceTextureListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener, MediaPlayer.OnVideoSizeChangedListener {
-    public static String TAG = "JieCaoVideoPlayer";
+public class MediaManager implements TextureView.SurfaceTextureListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener, MediaPlayer.OnVideoSizeChangedListener {
+    public static String TAG = "MediaManager";
 
-    private static JCMediaManager JCMediaManager;
-    public static JCResizeTextureView textureView;
+    private static MediaManager MediaManager;
+    public static ResizeTextureView textureView;
     public static SurfaceTexture savedSurfaceTexture;
     public MediaPlayer mediaPlayer = new MediaPlayer();
     public static String CURRENT_PLAYING_URL;
@@ -38,14 +38,14 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
     MediaHandler mMediaHandler;
     Handler mainThreadHandler;
 
-    public static JCMediaManager instance() {
-        if (JCMediaManager == null) {
-            JCMediaManager = new JCMediaManager();
+    public static MediaManager instance() {
+        if (MediaManager == null) {
+            MediaManager = new MediaManager();
         }
-        return JCMediaManager;
+        return MediaManager;
     }
 
-    public JCMediaManager() {
+    public MediaManager() {
         mMediaHandlerThread = new HandlerThread(TAG);
         mMediaHandlerThread.start();
         mMediaHandler = new MediaHandler((mMediaHandlerThread.getLooper()));
@@ -80,14 +80,14 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
                         Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
                         method.invoke(mediaPlayer, CURRENT_PLAYING_URL, MAP_HEADER_DATA);
                         mediaPlayer.setLooping(CURRENT_PLING_LOOP);
-                        mediaPlayer.setOnPreparedListener(JCMediaManager.this);
-                        mediaPlayer.setOnCompletionListener(JCMediaManager.this);
-                        mediaPlayer.setOnBufferingUpdateListener(JCMediaManager.this);
+                        mediaPlayer.setOnPreparedListener(MediaManager.this);
+                        mediaPlayer.setOnCompletionListener(MediaManager.this);
+                        mediaPlayer.setOnBufferingUpdateListener(MediaManager.this);
                         mediaPlayer.setScreenOnWhilePlaying(true);
-                        mediaPlayer.setOnSeekCompleteListener(JCMediaManager.this);
-                        mediaPlayer.setOnErrorListener(JCMediaManager.this);
-                        mediaPlayer.setOnInfoListener(JCMediaManager.this);
-                        mediaPlayer.setOnVideoSizeChangedListener(JCMediaManager.this);
+                        mediaPlayer.setOnSeekCompleteListener(MediaManager.this);
+                        mediaPlayer.setOnErrorListener(MediaManager.this);
+                        mediaPlayer.setOnInfoListener(MediaManager.this);
+                        mediaPlayer.setOnVideoSizeChangedListener(MediaManager.this);
                         mediaPlayer.prepareAsync();
                         mediaPlayer.setSurface(new Surface(savedSurfaceTexture));
                     } catch (Exception e) {
@@ -127,7 +127,6 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
 
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
-        // 如果SurfaceTexture还没有更新Image，则记录SizeChanged事件，否则忽略
         Log.i(TAG, "onSurfaceTextureSizeChanged [" + this.hashCode() + "] ");
     }
 
@@ -146,8 +145,8 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().onPrepared();
+                if (VideoPlayerManager.getCurrentJcvd() != null) {
+                    VideoPlayerManager.getCurrentJcvd().onPrepared();
                 }
             }
         });
@@ -158,8 +157,8 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().onAutoCompletion();
+                if (VideoPlayerManager.getCurrentJcvd() != null) {
+                    VideoPlayerManager.getCurrentJcvd().onAutoCompletion();
                 }
             }
         });
@@ -170,8 +169,8 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().setBufferProgress(percent);
+                if (VideoPlayerManager.getCurrentJcvd() != null) {
+                    VideoPlayerManager.getCurrentJcvd().setBufferProgress(percent);
                 }
             }
         });
@@ -182,8 +181,8 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().onSeekComplete();
+                if (VideoPlayerManager.getCurrentJcvd() != null) {
+                    VideoPlayerManager.getCurrentJcvd().onSeekComplete();
                 }
             }
         });
@@ -194,8 +193,8 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().onError(what, extra);
+                if (VideoPlayerManager.getCurrentJcvd() != null) {
+                    VideoPlayerManager.getCurrentJcvd().onError(what, extra);
                 }
             }
         });
@@ -207,8 +206,8 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().onInfo(what, extra);
+                if (VideoPlayerManager.getCurrentJcvd() != null) {
+                    VideoPlayerManager.getCurrentJcvd().onInfo(what, extra);
                 }
             }
         });
@@ -222,8 +221,8 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().onVideoSizeChanged();
+                if (VideoPlayerManager.getCurrentJcvd() != null) {
+                    VideoPlayerManager.getCurrentJcvd().onVideoSizeChanged();
                 }
             }
         });

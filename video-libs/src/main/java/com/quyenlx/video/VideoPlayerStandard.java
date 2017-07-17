@@ -29,15 +29,11 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
-import static java.security.AccessController.getContext;
-
 /**
  * Created by QuyenLx on 7/17/2017.
  */
 
-public class JCVideoPlayerStandard extends JCVideoPlayer {
+public class VideoPlayerStandard extends VideoPlayer {
 
     protected static Timer DISMISS_CONTROL_VIEW_TIMER;
 
@@ -54,11 +50,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
 
-    public JCVideoPlayerStandard(Context context) {
+    public VideoPlayerStandard(Context context) {
         super(context);
     }
 
-    public JCVideoPlayerStandard(Context context, AttributeSet attrs) {
+    public VideoPlayerStandard(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -189,7 +185,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                         bottomProgressBar.setProgress(progress);
                     }
                     if (!mChangePosition && !mChangeVolume) {
-                        onEvent(JCUserActionStandard.ON_CLICK_BLANK);
+                        onEvent(UserActionStandard.ON_CLICK_BLANK);
                         onClickUiToggle();
                     }
                     break;
@@ -218,11 +214,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             }
             if (currentState == CURRENT_STATE_NORMAL) {
                 if (!url.startsWith("file") && !url.startsWith("/") &&
-                        !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    showWifiDialog(JCUserActionStandard.ON_CLICK_START_THUMB);
+                        !Utils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+                    showWifiDialog(UserActionStandard.ON_CLICK_START_THUMB);
                     return;
                 }
-                onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
+                onEvent(UserActionStandard.ON_CLICK_START_THUMB);
                 startVideo();
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
@@ -246,7 +242,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
+                onEvent(UserActionStandard.ON_CLICK_START_THUMB);
                 startVideo();
                 WIFI_TIP_DIALOG_SHOWED = true;
             }

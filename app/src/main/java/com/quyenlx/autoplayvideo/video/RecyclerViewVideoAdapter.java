@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.quyenlx.autoplayvideo.R;
-import com.quyenlx.video.JCVideoPlayer;
-import com.quyenlx.video.JCVideoPlayerSimple;
+import com.quyenlx.video.VideoPlayer;
+import com.quyenlx.video.VideoPlayerSimple;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<RecyclerViewV
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         holder.jcVideoPlayer.setUp(mList.get(position).getVideoUrl(),
-                JCVideoPlayer.SCREEN_LAYOUT_LIST, "Hihi");
+                VideoPlayer.SCREEN_LAYOUT_LIST, "Hihi");
         Picasso.with(holder.jcVideoPlayer.getContext())
                 .load(mList.get(position).getThumbUrl())
                 .into(holder.jcVideoPlayer.thumbImageView);
@@ -55,7 +55,7 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<RecyclerViewV
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        JCVideoPlayerSimple jcVideoPlayer;
+        VideoPlayerSimple jcVideoPlayer;
 
         public MyViewHolder(View itemView) {
             super(itemView);

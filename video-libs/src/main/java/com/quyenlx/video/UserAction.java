@@ -4,7 +4,7 @@ package com.quyenlx.video;
  * Created by QuyenLx on 7/17/2017.
  */
 
-public interface JCUserAction {
+public interface UserAction {
     int ON_CLICK_START_ICON = 0;
     int ON_CLICK_START_ERROR = 1;
     int ON_CLICK_START_AUTO_COMPLETE = 2;

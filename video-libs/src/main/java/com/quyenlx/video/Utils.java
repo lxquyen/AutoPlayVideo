@@ -17,7 +17,7 @@ import java.util.Locale;
  * Created by QuyenLx on 7/17/2017.
  */
 
-public class JCUtils {
+public class Utils {
     public static String stringForTime(int timeMs) {
         if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {
             return "00:00";
@@ -87,7 +87,7 @@ public class JCUtils {
     }
 
     public static void saveProgress(Context context, String url, int progress) {
-        if (!JCVideoPlayer.SAVE_PROGRESS) return;
+        if (!VideoPlayer.SAVE_PROGRESS) return;
         SharedPreferences spn = context.getSharedPreferences("JCVD_PROGRESS",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = spn.edit();
@@ -96,7 +96,7 @@ public class JCUtils {
     }
 
     public static int getSavedProgress(Context context, String url) {
-        if (!JCVideoPlayer.SAVE_PROGRESS) return 0;
+        if (!VideoPlayer.SAVE_PROGRESS) return 0;
         SharedPreferences spn;
         spn = context.getSharedPreferences("JCVD_PROGRESS",
                 Context.MODE_PRIVATE);

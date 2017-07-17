@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.quyenlx.autoplayvideo.R;
-import com.quyenlx.video.JCVideoPlayer;
+import com.quyenlx.video.VideoPlayer;
 import com.quyenlx.visibility_utils.calculator.DefaultSingleItemCalculatorCallback;
 import com.quyenlx.visibility_utils.calculator.ListItemsVisibilityCalculator;
 import com.quyenlx.visibility_utils.calculator.SingleListViewItemActiveCalculator;
@@ -90,7 +90,7 @@ public class VideoFragment extends Fragment {
     }
 
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
+        if (VideoPlayer.backPress()) {
             return;
         }
     }
@@ -98,7 +98,7 @@ public class VideoFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+        VideoPlayer.releaseAllVideos();
     }
 
     @Override

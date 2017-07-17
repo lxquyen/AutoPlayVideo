@@ -4,7 +4,7 @@ import android.graphics.Rect;
 import android.view.View;
 
 import com.quyenlx.autoplayvideo.R;
-import com.quyenlx.video.JCVideoPlayerStandard;
+import com.quyenlx.video.VideoPlayerStandard;
 import com.quyenlx.visibility_utils.items.ListItem;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class VideoItem implements ListItem {
 
     @Override
     public void setActive(View newActiveView, int newActiveViewPosition) {
-        final JCVideoPlayerStandard videoPlayerStandard = newActiveView.findViewById(R.id.videoplayer);
+        final VideoPlayerStandard videoPlayerStandard = newActiveView.findViewById(R.id.videoplayer);
         videoPlayerStandard.startVideo();
     }
 

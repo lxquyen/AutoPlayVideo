@@ -9,16 +9,16 @@ import android.widget.ImageView;
  * Created by QuyenLx on 7/17/2017.
  */
 
-public class JCVideoPlayerSimple extends JCVideoPlayerStandard {
+public class VideoPlayerSimple extends VideoPlayerStandard {
     public ImageView audioButton;
-    private boolean isMute = true;
+    private boolean isMute = false;
 
 
-    public JCVideoPlayerSimple(Context context) {
+    public VideoPlayerSimple(Context context) {
         super(context);
     }
 
-    public JCVideoPlayerSimple(Context context, AttributeSet attrs) {
+    public VideoPlayerSimple(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -32,7 +32,7 @@ public class JCVideoPlayerSimple extends JCVideoPlayerStandard {
         super.init(context);
         audioButton = findViewById(R.id.audio);
         audioButton.setOnClickListener(this);
-//        JCMediaManager.instance().mediaPlayer.setVolume(0f, 0f);
+//        MediaManager.instance().mediaPlayer.setVolume(0f, 0f);
     }
 
     @Override
@@ -42,9 +42,9 @@ public class JCVideoPlayerSimple extends JCVideoPlayerStandard {
         int i = v.getId();
         if (i == R.id.audio) {
             if (isMute) {
-                JCMediaManager.instance().mediaPlayer.setVolume(1f, 1f);
+                MediaManager.instance().mediaPlayer.setVolume(1f, 1f);
             } else {
-                JCMediaManager.instance().mediaPlayer.setVolume(0f, 0f);
+                MediaManager.instance().mediaPlayer.setVolume(0f, 0f);
             }
             isMute = !isMute;
         }

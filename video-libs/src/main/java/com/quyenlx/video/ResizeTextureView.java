@@ -13,18 +13,18 @@ import static android.view.View.getDefaultSize;
  * Created by QuyenLx on 7/17/2017.
  */
 
-public class JCResizeTextureView extends TextureView {
-    protected static final String TAG = "JCResizeTextureView";
+public class ResizeTextureView extends TextureView {
+    protected static final String TAG = "ResizeTextureView";
 
     // x as width, y as height
     protected Point mVideoSize;
 
-    public JCResizeTextureView(Context context) {
+    public ResizeTextureView(Context context) {
         super(context);
         init();
     }
 
-    public JCResizeTextureView(Context context, AttributeSet attrs) {
+    public ResizeTextureView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -57,7 +57,6 @@ public class JCResizeTextureView extends TextureView {
         Log.i(TAG, "videoWidth = " + videoWidth + ", " + "videoHeight = " + videoHeight);
         Log.i(TAG, "viewRotation = " + viewRotation);
 
-        // 如果判断成立，则说明显示的TextureView和本身的位置是有90度的旋转的，所以需要交换宽高参数。
         if (viewRotation == 90 || viewRotation == 270) {
             int tempMeasureSpec = widthMeasureSpec;
             widthMeasureSpec = heightMeasureSpec;
